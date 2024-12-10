@@ -1,11 +1,22 @@
 import React, { useContext } from "react";
 import AppContext from "../../context/AppContext";
 import { Link } from "react-router-dom";
+import "../../index.css";
 
 const ShowProduct = () => {
-  const { products, filteredData, addToCart } = useContext(AppContext);
+  const { products, filteredData, addToCart,spinner } = useContext(AppContext);
+  
   return (
     <>
+    
+    {
+      spinner ? (
+        <div className="loading-container">
+        <h1 >Loading...</h1>
+        <h1 className="loading"></h1>
+      </div>
+      ) : (
+
       <div className="container d-flex justify-content-center align-items-center">
         <div className="row container d-flex justify-content-center align-items-center my-5">
           {filteredData?.map((product) => (
@@ -63,6 +74,8 @@ const ShowProduct = () => {
           ))}
         </div>
       </div>
+      )
+    }
     </>
   );
 };

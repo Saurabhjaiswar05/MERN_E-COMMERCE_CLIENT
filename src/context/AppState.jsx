@@ -8,6 +8,8 @@ const AppState = (props) => {
   const url = "https://mern-e-api.onrender.com/api"; // this url of backend server
 
   const [products, setProducts] = useState([]);
+
+  const [spinner,setSpinner] = useState(true);
   //
   const [token, setToken] = useState([]);
   // for user new naviagtion bar
@@ -19,18 +21,26 @@ const AppState = (props) => {
   const [userAddress,setUserAddress] = useState("")
 
   useEffect(() => {
+    
+    
     const fetchProduct = async () => {
-      const api = await axios.get(`${url}/product/all`, {
-        headers: {
-          "Content-Type": "Application/json",
-        },
-        withCredentials: true,
-      });
 
-      // console.log(api.data.products);
-      setProducts(api.data.products);
-      setFilteredData(api.data.products);
-      userProfile();
+      
+        
+        const api = await axios.get(`${url}/product/all`, {
+          headers: {
+            "Content-Type": "Application/json",
+          },
+          withCredentials: true,
+        });
+  
+        // console.log(api.data.products);
+        setProducts(api.data.products);
+        setFilteredData(api.data.products);
+        setSpinner(false); 
+        userProfile();
+
+      
     };
 
     fetchProduct();
@@ -39,6 +49,7 @@ const AppState = (props) => {
   }, [token,reload]);
 
   // taking token from local storage
+
   useEffect(()=>{
       let lstoken = localStorage.getItem("token")
 
@@ -263,7 +274,8 @@ const AppState = (props) => {
         removeFromCart,
         clearCart,
         shippingAddress,
-        userAddress
+        userAddress,
+        spinner,
       }}
     >
       {props.children}
